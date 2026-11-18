@@ -17,24 +17,13 @@ import http from "node:http";
 import { readFile } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ethers } from "ethers";
 import { contractCheck, approvalCheck, txCheck, isAddress } from "../engine/checks.mjs";
 import { agentIdOf } from "../engine/rpc.mjs";
 import { getBlocklist, getLeaderboard } from "../engine/registry.mjs";
+import { withHash } from "../engine/report.mjs";
 
 const WEB_DIR = fileURLToPath(new URL("../web", import.meta.url));
 const PORT = Number(process.env.PORT || 8787);
-
-function canonicalReport(report) {
-  const { checkedAt, ...rest } = report;
-  return JSON.stringify(rest, Object.keys(rest).sort());
-}
-function withHash(report) {
-  return {
-    ...report,
-    reportHash: ethers.keccak256(ethers.toUtf8Bytes(canonicalReport(report))),
-  };
-}
 
 function sendJson(res, status, obj) {
   const body = JSON.stringify(obj, null, 2);

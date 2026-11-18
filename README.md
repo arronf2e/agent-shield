@@ -69,7 +69,10 @@ provides exactly that, bound to the agent's on-chain identity (Agent ID /
   Agent ID registry `0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F`). No owner,
   no admin functions, no withdrawals, no upgrade proxy.
 - `engine/` — zero-framework check engine (plain Node.js, `fetch`-based RPC).
-- `api/server.mjs` — the HTTP API + static web app.
+- `api/guard/*.js` — the HTTP API as serverless functions (Vercel);
+  `server/server.mjs` runs the same API + web app on a plain Node host.
+  No database and no stateful backend: every verdict is computed live from
+  GoPlus, Sourcify and the chain.
 - `web/` — the human-facing dashboard (contract check, approval check,
   transaction rehearsal, blocklist, leaderboard).
 - `SKILL.md` — integration spec for other agents: insert one guard call
@@ -140,7 +143,7 @@ npx hardhat test
 BSC_FORK=1 npx hardhat test test/fork-verify.js   # see hardhat.config.js
 
 # API + web dashboard on http://localhost:8787
-node api/server.mjs
+node server/server.mjs
 
 # Engine smoke test (server must be running)
 node scripts/smoke-engine.mjs
