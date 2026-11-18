@@ -1,0 +1,23 @@
+{
+  "name": "agent-shield",
+  "version": "1.0.0",
+  "description": "AgentShield - pre-flight security firewall for AI agents on BNB Chain (Agent ID Hackathon)",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "fork-verify": "BSC_FORK=1 hardhat run scripts/fork-verify.js --network hardhat",
+    "deploy": "hardhat run scripts/deploy.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "ethers": "^6.17.0",
+    "hardhat": "^2.29.2"
+  }
+}

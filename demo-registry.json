@@ -1,0 +1,6 @@
+{
+  "guardRegistry": "0x99fBd04BBE2269B0AA348da932937B5e2461e490",
+  "fromBlock": 134285079,
+  "rpc": "http://127.0.0.1:8545",
+  "note": "Local BSC mainnet fork demo data. Impersonated real Agent ID holders on the fork only; no real funds or mainnet transactions."
+}

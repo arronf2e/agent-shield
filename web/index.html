@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AgentShield — Agent ID 安全卫士</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">🛡️</div>
+    <div>
+      <h1>AgentShield</h1>
+      <p class="tagline">给会自己花钱的 AI Agent，装一道执行前防火墙 · BNB Chain</p>
+    </div>
+  </div>
+  <div class="identity">
+    <input id="walletInput" placeholder="粘贴钱包地址 0x..." spellcheck="false" />
+    <button id="connectBtn">连接钱包</button>
+    <div id="agentBadge" class="badge hidden"></div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="contract">合约体检</button>
+  <button class="tab" data-tab="approval">授权体检</button>
+  <button class="tab" data-tab="tx">交易预演卫士</button>
+  <button class="tab" data-tab="blocklist">社区黑名单</button>
+  <button class="tab" data-tab="leaderboard">排行榜</button>
+</nav>
+
+<main>
+  <section id="tab-contract" class="panel active">
+    <p class="hint">输入任意 BSC 合约地址，检查貔貅、可增发、隐藏所有者、税率、源码验证等风险。</p>
+    <div class="row">
+      <input id="contractInput" placeholder="合约地址 0x..." spellcheck="false" />
+      <button class="primary" id="contractBtn">开始体检</button>
+    </div>
+    <div class="samples">
+      示例：
+      <a href="#" data-sample-contract="0x55d398326f99059fF775485246999027B3197955">USDT（低风险样本）</a>
+      <a href="#" data-sample-contract="0x6D061974e66f5AF28C703DE5C1Ae33a671ded45F">普通钱包（非合约样本）</a>
+    </div>
+    <div id="contractResult"></div>
+  </section>
+
+  <section id="tab-approval" class="panel">
+    <p class="hint">两种模式：① 只填钱包 → 扫描主要代币 × 主要 DEX 的现有授权（链上直读）；② 再填授权目标 → 检查「正准备授权的这个合约」危不危险。</p>
+    <div class="row">
+      <input id="approvalWallet" placeholder="钱包地址 0x...（默认用上方身份地址）" spellcheck="false" />
+    </div>
+    <div class="row">
+      <input id="approvalSpender" placeholder="授权目标 spender 0x...（可选）" spellcheck="false" />
+      <input id="approvalToken" placeholder="代币合约 0x...（可选）" spellcheck="false" />
+      <button class="primary" id="approvalBtn">开始体检</button>
+    </div>
+    <div id="approvalResult"></div>
+  </section>
+
+  <section id="tab-tx" class="panel">
+    <p class="hint">粘贴一笔正准备签的交易（比如 baw contract-call preview 的内容），先模拟、先解码，再决定签不签。</p>
+    <div class="row"><input id="txFrom" placeholder="from 地址 0x...（你的钱包，用于模拟执行）" spellcheck="false" /></div>
+    <div class="row"><input id="txTo" placeholder="to 合约地址 0x..." spellcheck="false" /></div>
+    <div class="row">
+      <input id="txValue" placeholder="value（wei，默认 0）" spellcheck="false" />
+    </div>
+    <div class="row"><textarea id="txData" rows="3" placeholder="data（0x 开头的 calldata）" spellcheck="false"></textarea></div>
+    <div class="row">
+      <button class="primary" id="txBtn">预演这笔交易</button>
+      <span class="samples">
+        示例：
+        <a href="#" id="sampleApprove">给陌生合约无限授权 approve</a>
+        <a href="#" id="sampleRevoke">撤销授权 approve(0)</a>
+      </span>
+    </div>
+    <div id="txResult"></div>
+  </section>
+
+  <section id="tab-blocklist" class="panel">
+    <p class="hint">由持有 Agent ID 的用户共同维护：举报一个风险合约后，3 个不同 Agent 确认即自动上榜拦截。数据全部来自 GuardRegistry 合约事件，可在链上复核。</p>
+    <div id="blocklistContent"><div class="loading">加载中...</div></div>
+  </section>
+
+  <section id="tab-leaderboard" class="panel">
+    <p class="hint">已注册护盾的 Agent 与他们的检查/举报贡献。黑客松评审门槛：至少 30 个 Agent ID 地址与合约交互。</p>
+    <div id="leaderboardContent"><div class="loading">加载中...</div></div>
+  </section>
+</main>
+
+<footer>
+  <p>数据源：GoPlus Security · Sourcify · BSC 公共 RPC（均实时查询，数据源不可用时报告会明确标注，不编造）。</p>
+  <p>链上存证合约 GuardRegistry 已通过 13 项单元测试与主网分叉验证。黑名单/排行榜当前展示本地主网分叉上的演示数据（真实 Agent ID 持有者在分叉上模拟注册/举报），主网部署后自动切换为真实数据。</p>
+  <p class="dim">AgentShield · Binance Wallet × BNB Chain Agent ID Hackathon</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
